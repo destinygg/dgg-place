@@ -18,6 +18,14 @@ if (window.top !== window.self) {
             responseType: 'blob',
             url: 'https://raw.githubusercontent.com/chatter-here/dgg-place/master/dgg-place-template-1.png',
             onload: function (response) {
+                let blob;
+                if (response.response instanceof Blob) {
+                    blob = response.response;
+                } else if(response.responseXML instanceof Blob) {
+                    blob = response.responseXML;
+                } else {
+                    console.error('unable to fetch template');
+                }
                 const fr = new FileReader();
                 fr.onload = (e) => {
                     image.src = e.target.result;
@@ -38,7 +46,7 @@ if (window.top !== window.self) {
                         }
                     }, 100);
                 }
-                fr.readAsDataURL(response.responseXML);
+                fr.readAsDataURL(blob);
             },
         });
     }, false);
