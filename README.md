@@ -2,7 +2,7 @@
 
 Chrome setup:
 * Install the [Violentmonkey](https://chrome.google.com/webstore/detail/violentmonkey/jinjaccalgkegednnccohejagnlnfdag) or [Tampermonkey](https://chrome.google.com/webstore/detail/tampermonkey/dhdgffkkebhmkfjojejmpbldmpobfkfo) addon
-* Visit [https://github.com/chatter-here/dgg-place/raw/master/dgg-place.user.js](https://github.com/chatter-here/dgg-place/raw/master/dgg-place.user.js) in a new tab
+* Visit [https://rplacecdn.destiny.gg/dgg-place.user.js](https://rplacecdn.destiny.gg/dgg-place.user.js) in a new tab
 * Click the install button
 * Visit /r/place and refresh the page to get the latest template
 
@@ -10,7 +10,7 @@ Chrome setup:
 
 Firefox setup:
 * Install the [Violentmonkey](https://addons.mozilla.org/en-US/firefox/addon/violentmonkey/) or [Tampermonkey](https://addons.mozilla.org/en-US/firefox/addon/tampermonkey/) addon
-* Visit [https://github.com/chatter-here/dgg-place/raw/master/dgg-place.user.js](https://github.com/chatter-here/dgg-place/raw/master/dgg-place.user.js) in a new tab
+* Visit [https://rplacecdn.destiny.gg/dgg-place.user.js](https://rplacecdn.destiny.gg/dgg-place.user.js) in a new tab
 * Click the install button
 * Visit /r/place and refresh the page to get the latest template
 
