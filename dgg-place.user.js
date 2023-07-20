@@ -16,7 +16,7 @@ if (window.top !== window.self) {
         GM_xmlhttpRequest({
             method: 'GET',
             responseType: 'blob',
-            url: 'http://localhost:8000/dgg-place-template-1.png',
+            url: 'https://raw.githubusercontent.com/chatter-here/dgg-place/master/dgg-place-template-1.png',
             onload: function (response) {
                 const fr = new FileReader();
                 fr.onload = (e) => {
