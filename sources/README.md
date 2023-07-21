@@ -1,1 +1,0 @@
-Warning: These files are provided for educational/learning purposes and may be stale; check before using
