@@ -80,30 +80,93 @@ if (window.top !== window.self) {
             });
         }
 
-        function toggle() {
-            if (image.style.display === 'block') {
-                image.style.display = 'none';
+
+        function toggleElement(element, display = 'block') {
+            if (element.style.display === display) {
+                element.style.display = 'none';
             } else {
-                image.style.display = 'block';
+                element.style.display = display;
             }
         }
 
-        function addButton(text, onclick, cssObj) {
-            cssObj = cssObj || {position: 'absolute', bottom: '5%', left:'4%', 'z-index': 3};
-            let button = document.createElement('button'), btnStyle = button.style;
-            document.body.appendChild(button);
-            button.innerHTML = text;
-            // button.onclick = onclick;
-            button.addEventListener('click', onclick);
-            btnStyle.position = 'absolute';
-            Object.keys(cssObj).forEach(key => {btnStyle[key] = cssObj[key]});
-            return button;
+        function addElement(tag, { parent = document.body, style, innerhtml, onclick }) {
+            let element = document.createElement(tag);
+            Object.assign(element.style, style);
+            if (innerhtml) {
+                element.innerHTML = innerhtml;
+            }
+            if (onclick) {
+                element.addEventListener('click', onclick);
+            }
+            parent.appendChild(element);
+            return element;
         }
 
-        addButton('Refresh Template', () => refresh(true),
-            {position: 'absolute', bottom: '10px', left:'4%', 'z-index': 3});
-        addButton('Toggle Template', toggle,
-            {position: 'absolute', bottom: '50px', left:'4%', 'z-index': 3});
+        let settingsDiv = addElement('div', {
+            style: {
+                position: 'absolute',
+                bottom: '30px',
+                left: '86px',
+                'z-index': 3,
+                padding: '10px',
+                borderRadius: '4px',
+                background: '#222',
+                display: 'none',
+                flexDirection: 'column',
+                gap: '10px',
+            },
+        });
+
+        let dggBtn = addElement('button', {
+            style: {
+                position: 'absolute',
+                bottom: '30px',
+                left: '30px',
+                zIndex: 3,
+                width: '48px',
+                height: '50px',
+                padding: '0px',
+                borderRadius: '4px',
+                background: '#000',
+                boxSizing: 'border-box',
+            },
+            innerhtml: '<img width="48" height="48" src="https://cdn.destiny.gg/img/favicon/favicon-48x48.png" />',
+            onclick: () => toggleElement(settingsDiv, 'flex'),
+        });
+
+        addElement('button', {
+            parent: settingsDiv,
+            innerhtml: 'Refresh Template',
+            onclick: () => refresh(true),
+        });
+
+        addElement('button', {
+            parent: settingsDiv,
+            innerhtml: 'Toggle Template',
+            onclick: () => toggleElement(image),
+        });
+
+        let extTempContainer = addElement('div', {
+            parent: settingsDiv,
+        });
+        let extTempInput = addElement('input', {
+            parent: extTempContainer,
+            style: {
+                padding: '6px',
+                'font-size': '12px',
+                border: '1px solid #000',
+                marginRight: '5px',
+            },
+        });
+        extTempInput.placeholder = 'Use external template';
+        addElement('button', {
+            parent: extTempContainer,
+            innerhtml: 'Use',
+            onclick: () => {
+                image.style = 'display: none;width:100%;height:100%;';
+                image.src = extTempInput.value;
+            },
+        });
 
     }, false);
 }
