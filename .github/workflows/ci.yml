@@ -18,7 +18,7 @@ jobs:
       - name: Deploy to Cloudflare R2
         run: |
           aws s3 cp ./dgg-place-template-1.png s3://rplacecdn/dgg-place-template-1.png --endpoint-url https://883bb318ad59e2211a4acb9610074d91.r2.cloudflarestorage.com
-          aws s3 cp ./dgg-place-template-1.png s3://rplacecdn/dgg-place-template-1x.png --endpoint-url https://883bb318ad59e2211a4acb9610074d91.r2.cloudflarestorage.com
+          aws s3 cp ./dgg-place-template-1x.png s3://rplacecdn/dgg-place-template-1x.png --endpoint-url https://883bb318ad59e2211a4acb9610074d91.r2.cloudflarestorage.com
           aws s3 cp ./dgg-place.user.js s3://rplacecdn/dgg-place.user.js --endpoint-url https://883bb318ad59e2211a4acb9610074d91.r2.cloudflarestorage.com
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.CLOUDFLARE_R2_ACCESS_KEY_ID }}
