@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         DGG r/place
-// @version      0.2.4
+// @version      0.2.5
 // @description  Template overlay for DGG.
 // @match        https://garlic-bread.reddit.com/embed*
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=destiny.gg
