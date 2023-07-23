@@ -47,8 +47,8 @@ if (window.top !== window.self) {
         refresh();
 
         // use force refresh button instead...
-        // document.body.addEventListener('click', refresh, true); // refresh on click
-        // setInterval(refresh, 1000 * 60 * 15); // 15 minute auto refresh
+        document.body.addEventListener('click', refresh, true); // refresh on click
+        setInterval(refresh, 1000 * 60 * 15); // 15 minute auto refresh
 
         function refresh(forceRefresh) {
             let _4min = 1000 * 60 * 4;
