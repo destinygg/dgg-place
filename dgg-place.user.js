@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         DGG r/place
-// @version      0.2.4
+// @version      0.2.5
 // @description  Template overlay for DGG.
 // @match        https://garlic-bread.reddit.com/embed*
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=destiny.gg
@@ -47,8 +47,8 @@ if (window.top !== window.self) {
         refresh();
 
         // use force refresh button instead...
-        // document.body.addEventListener('click', refresh, true); // refresh on click
-        // setInterval(refresh, 1000 * 60 * 15); // 15 minute auto refresh
+        document.body.addEventListener('click', refresh, true); // refresh on click
+        setInterval(refresh, 1000 * 60 * 15); // 15 minute auto refresh
 
         function refresh(forceRefresh) {
             let _4min = 1000 * 60 * 4;
