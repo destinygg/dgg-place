@@ -13,7 +13,7 @@ jobs:
 
     steps:
       - name: Checkout Repo
-        uses: actions/Checkout@v2
+        uses: actions/checkout@v3
 
       - name: Deploy to Cloudflare R2
         run: |
