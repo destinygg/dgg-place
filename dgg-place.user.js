@@ -139,19 +139,19 @@ if (window.top !== window.self) {
             {position: 'absolute', bottom: '10px', left:'4%', 'z-index': 3});
         addButton('Toggle Template', toggle,
             {position: 'absolute', bottom: '50px', left:'4%', 'z-index': 3});
+        // addButton('Export Canvas', exportCanvas,
+        //     {position: 'absolute', bottom: '10px', right:'4%', 'z-index': 3});
 
-        function saveCanvas() {
-            const image = canvas.shadowRoot.querySelector('.container > canvas')
-                .toDataUrl('image/png');
-            const link = document.createElement('a');
-            const filename = 'canvas.png';
-            link.setAttribute('href', image);
-            link.setAttribute('download', filename);
-            link.click();
+        function exportCanvas() {
+            // zoom all the way out to load the whole canvas first
+            console.log('Export Canvas')
+            canvas.shadowRoot.querySelector('.container > canvas').toBlob(function(blob) {
+                const link = document.createElement('a');
+                link.href = URL.createObjectURL(blob);
+                link.download = 'canvas.png';
+                link.click();
+            },'image/png');
         }
-
-        window.saveCanvas = saveCanvas;
-        // console.log(saveCanvas.toString())
 
     }, false);
 }
