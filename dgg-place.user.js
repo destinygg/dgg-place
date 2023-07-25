@@ -18,6 +18,9 @@ if (window.top !== window.self) {
         // const maskPattern = document.createElement('img');
         // maskPattern.setAttribute('src', 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAMAAAADCAQAAAD8IX00AAAADklEQVQIW2NggIP/cBYACgsBAIGogeEAAAAASUVORK5CYII=');
 
+        // const dggTemplateUrl = 'http://localhost:8000/dgg-place-template-1x.png';
+        const dggTemplateUrl = 'https://rplacecdn.destiny.gg/dgg-place-template-1x.png';
+        let templateUrl = dggTemplateUrl;
 
         const loader = document.createElement('img');
         const overlay = document.createElement('img');
@@ -58,11 +61,15 @@ if (window.top !== window.self) {
             }
             console.log('refreshing template');
             lastRefresh = Date.now();
+            let theUrl = dggTemplateUrl;
+            if (templateUrl != null && templateUrl !== '') {
+                theUrl = templateUrl;
+            }
             GM_xmlhttpRequest({
                 method: 'GET',
                 responseType: 'blob',
-                // url: `http://localhost:8000/dgg-place-template-1x.png`,
-                url: `https://rplacecdn.destiny.gg/dgg-place-template-1x.png?i=${Date.now()}`,
+                // url: theUrl, // non cache busting
+                url: `${theUrl}?i=${Date.now()}`, // cache busting
                 onload: function (response) {
                     let blob;
                     if (response.response instanceof Blob) {
@@ -115,30 +122,102 @@ if (window.top !== window.self) {
             overlay.src = canvas.toDataURL();
         };
 
-        function toggle() {
-            if (overlay.style.display === 'block') {
-                overlay.style.display = 'none';
+        function toggleElement(element, display = 'block') {
+            if (element.style.display === display) {
+                element.style.display = 'none';
             } else {
-                overlay.style.display = 'block';
+                element.style.display = display;
             }
         }
 
-        function addButton(text, onclick, cssObj) {
-            cssObj = cssObj || {position: 'absolute', bottom: '5%', left:'4%', 'z-index': 3};
-            let button = document.createElement('button'), btnStyle = button.style;
-            document.body.appendChild(button);
-            button.innerHTML = text;
-            // button.onclick = onclick;
-            button.addEventListener('click', onclick);
-            btnStyle.position = 'absolute';
-            Object.keys(cssObj).forEach(key => {btnStyle[key] = cssObj[key]});
-            return button;
+        function addElement(tag, { parent = document.body, style, innerhtml, onclick }) {
+            let element = document.createElement(tag);
+            Object.assign(element.style, style);
+            if (innerhtml) {
+                element.innerHTML = innerhtml;
+            }
+            if (onclick) {
+                element.addEventListener('click', onclick);
+            }
+            parent.appendChild(element);
+            return element;
         }
 
-        addButton('Refresh Template', () => refresh(true),
-            {position: 'absolute', bottom: '10px', left:'4%', 'z-index': 3});
-        addButton('Toggle Template', toggle,
-            {position: 'absolute', bottom: '50px', left:'4%', 'z-index': 3});
+        let settingsDiv = addElement('div', {
+            style: {
+                position: 'absolute',
+                bottom: '30px',
+                left: '86px',
+                'z-index': 3,
+                padding: '10px',
+                borderRadius: '4px',
+                background: '#222',
+                display: 'none',
+                flexDirection: 'column',
+                gap: '10px',
+            },
+        });
+
+        const favicon = `
+        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 265 265">
+        <path fill="#59aeea" d="M163.97 243.977h80.581V193.3h-32.506zM244.551 74.875V24.199h-80.58l48.074 50.676z"/>
+        <path fill="#1A1A1A" d="M0 0v264.652h264.648V.22L0 0zm244.551 243.977h-80.58l48.077-50.68h32.507v50.68h-.004zm0-169.102h-32.506l-48.078-50.68h80.58v50.68h.004z"/>
+        <path fill="#FFF" d="M22.098 28.189V240.16h116.228l49.358-51.89V78.776l-49.33-50.587H22.097zm68.78 29.63h17.363V206.67H90.877V57.82z"/>
+        </svg>`;
+
+        let dggBtn = addElement('button', {
+            style: {
+                position: 'absolute',
+                bottom: '30px',
+                left: '30px',
+                zIndex: 3,
+                width: '48px',
+                height: '50px',
+                padding: '0px',
+                borderRadius: '4px',
+                background: '#000',
+                boxSizing: 'border-box',
+            },
+            // innerhtml: '<img width="48" height="48" src="https://cdn.destiny.gg/img/favicon/favicon-48x48.png" />',
+            innerhtml: favicon,
+            onclick: () => toggleElement(settingsDiv, 'flex'),
+        });
+
+
+        addElement('button', {
+            parent: settingsDiv,
+            innerhtml: 'Refresh Template',
+            onclick: () => refresh(true),
+        });
+
+        addElement('button', {
+            parent: settingsDiv,
+            innerhtml: 'Toggle Template',
+            onclick: () => toggleElement(overlay),
+        });
+
+        let extTempContainer = addElement('div', {
+            parent: settingsDiv,
+        });
+        let extTempInput = addElement('input', {
+            parent: extTempContainer,
+            style: {
+                padding: '6px',
+                'font-size': '12px',
+                border: '1px solid #000',
+                marginRight: '5px',
+            },
+        });
+        extTempInput.placeholder = 'Use external template';
+        addElement('button', {
+            parent: extTempContainer,
+            innerhtml: 'Use',
+            onclick: () => {
+                templateUrl = extTempInput.value;
+                refresh(true);
+            },
+        });
+
         // addButton('Export Canvas', exportCanvas,
         //     {position: 'absolute', bottom: '10px', right:'4%', 'z-index': 3});
 
