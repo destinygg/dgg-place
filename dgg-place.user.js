@@ -27,6 +27,9 @@ if (window.top !== window.self) {
         overlay.style = 'display: none';
         overlay.onload = () => {
             overlay.style = `display: block;position: absolute; left: 0; top: 0; width: ${overlay.width / 3}px; height: ${overlay.height / 3}px; image-rendering: pixelated; z-index: 1`;
+            // sync toggle button state
+            overlayActive = true;
+            toggleBtn.innerHTML = toggleIcon + 'Toggle Template';
         };
 
         // Add the image as overlay
@@ -158,7 +161,7 @@ if (window.top !== window.self) {
             },
         });
 
-        let dggBtn = addElement('button', {
+        addElement('button', {
             style: {
                 position: 'absolute',
                 bottom: '30px',
