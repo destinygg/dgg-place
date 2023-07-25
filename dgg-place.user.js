@@ -186,6 +186,12 @@ if (window.top !== window.self) {
 
         addElement('button', {
             parent: settingsDiv,
+            innerhtml: 'Export Canvas',
+            onclick: exportCanvas,
+        });
+
+        addElement('button', {
+            parent: settingsDiv,
             innerhtml: 'Refresh Template',
             onclick: () => refresh(true),
         });
@@ -218,8 +224,6 @@ if (window.top !== window.self) {
             },
         });
 
-        // addButton('Export Canvas', exportCanvas,
-        //     {position: 'absolute', bottom: '10px', right:'4%', 'z-index': 3});
 
         function exportCanvas() {
             // zoom all the way out to load the whole canvas first
