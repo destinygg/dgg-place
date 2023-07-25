@@ -158,13 +158,6 @@ if (window.top !== window.self) {
             },
         });
 
-        const favicon = `
-        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 265 265">
-        <path fill="#59aeea" d="M163.97 243.977h80.581V193.3h-32.506zM244.551 74.875V24.199h-80.58l48.074 50.676z"/>
-        <path fill="#1A1A1A" d="M0 0v264.652h264.648V.22L0 0zm244.551 243.977h-80.58l48.077-50.68h32.507v50.68h-.004zm0-169.102h-32.506l-48.078-50.68h80.58v50.68h.004z"/>
-        <path fill="#FFF" d="M22.098 28.189V240.16h116.228l49.358-51.89V78.776l-49.33-50.587H22.097zm68.78 29.63h17.363V206.67H90.877V57.82z"/>
-        </svg>`;
-
         let dggBtn = addElement('button', {
             style: {
                 position: 'absolute',
@@ -183,23 +176,37 @@ if (window.top !== window.self) {
             onclick: () => toggleElement(settingsDiv, 'flex'),
         });
 
+        const buttonStyles = {
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            gap: '6px',
+        }
 
         addElement('button', {
             parent: settingsDiv,
-            innerhtml: 'Export Canvas',
+            style: buttonStyles,
+            innerhtml: exportIcon + 'Export Canvas',
             onclick: exportCanvas,
         });
 
         addElement('button', {
             parent: settingsDiv,
-            innerhtml: 'Refresh Template',
+            style: buttonStyles,
+            innerhtml: refreshIcon + 'Refresh Template',
             onclick: () => refresh(true),
         });
 
-        addElement('button', {
+        let overlayActive = true;
+        let toggleBtn = addElement('button', {
             parent: settingsDiv,
-            innerhtml: 'Toggle Template',
-            onclick: () => toggleElement(overlay),
+            style: buttonStyles,
+            innerhtml: toggleIcon + 'Toggle Template',
+            onclick: () => {
+                toggleElement(overlay);
+                overlayActive = !overlayActive;
+                toggleBtn.innerHTML = (overlayActive ? toggleIcon : toggleIconOff) + 'Toggle Template';
+            },
         });
 
         let extTempContainer = addElement('div', {
@@ -238,4 +245,15 @@ if (window.top !== window.self) {
 
     }, false);
 }
+
+const favicon = `
+<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 265 265">
+<path fill="#59aeea" d="M163.97 243.977h80.581V193.3h-32.506zM244.551 74.875V24.199h-80.58l48.074 50.676z"/>
+<path fill="#1A1A1A" d="M0 0v264.652h264.648V.22L0 0zm244.551 243.977h-80.58l48.077-50.68h32.507v50.68h-.004zm0-169.102h-32.506l-48.078-50.68h80.58v50.68h.004z"/>
+<path fill="#FFF" d="M22.098 28.189V240.16h116.228l49.358-51.89V78.776l-49.33-50.587H22.097zm68.78 29.63h17.363V206.67H90.877V57.82z"/>
+</svg>`;
+const exportIcon = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="m12 16l-5-5l1.4-1.45l2.6 2.6V4h2v8.15l2.6-2.6L17 11l-5 5Zm-6 4q-.825 0-1.413-.588T4 18v-3h2v3h12v-3h2v3q0 .825-.588 1.413T18 20H6Z"/></svg>';
+const refreshIcon = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M12 20q-3.35 0-5.675-2.325T4 12q0-3.35 2.325-5.675T12 4q1.725 0 3.3.712T18 6.75V4h2v7h-7V9h4.2q-.8-1.4-2.188-2.2T12 6Q9.5 6 7.75 7.75T6 12q0 2.5 1.75 4.25T12 18q1.925 0 3.475-1.1T17.65 14h2.1q-.7 2.65-2.85 4.325T12 20Z"/></svg>';
+const toggleIcon = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M17 7H7a5 5 0 0 0-5 5a5 5 0 0 0 5 5h10a5 5 0 0 0 5-5a5 5 0 0 0-5-5m0 8a3 3 0 0 1-3-3a3 3 0 0 1 3-3a3 3 0 0 1 3 3a3 3 0 0 1-3 3Z"/></svg>';
+const toggleIconOff = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M17 6H7c-3.31 0-6 2.69-6 6s2.69 6 6 6h10c3.31 0 6-2.69 6-6s-2.69-6-6-6zm0 10H7c-2.21 0-4-1.79-4-4s1.79-4 4-4h10c2.21 0 4 1.79 4 4s-1.79 4-4 4zM7 9c-1.66 0-3 1.34-3 3s1.34 3 3 3s3-1.34 3-3s-1.34-3-3-3z"/></svg>';
 
